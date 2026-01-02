@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeMax | Professional Trading Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!--  style.css here  -->
+
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo"><i class="fas fa-chart-line"></i> TradeMax</div>
+        <div class="header-actions">
+            <button class="btn btn-support">
+                <i class="fas fa-headset"></i> Support
+            </button>
+        </div>
+    </header>
+    <!-- Product Selection -->
+    <div class="product-selection">
+        <div class="product-options">
+            <label class="product-option active" data-product="stocks">
+                <input type="radio" name="product" checked>
+                <i class="fas fa-chart-bar"></i> Stocks
+            </label>
+            <label class="product-option" data-product="derivatives">
+                <input type="radio" name="product">
+                <i class="fas fa-exchange-alt"></i> Derivatives
+            </label>
+            <label class="product-option" data-product="mutualfunds">
+                <input type="radio" name="product">
+                <i class="fas fa-piggy-bank"></i> Mutual Funds
+            </label>
+        </div>
+    </div>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container"></div>
+    </nav>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search stocks (e.g., RELIANCE, INFY, HDFC)">
+            <div class="search-results" id="search-results">
+                <!-- Search results will appear here -->
+            </div>
+        </div>
+    </div>
+    <!-- Content Sections -->
+    <div class="container">
+        <section id="watchlist-section" class="content-section active">
+            <div class="watchlist-section">
+                <div class="watchlist-header">
+                    <h2 class="watchlist-title">My Watchlist</h2>
+                    <div class="watchlist-controls">
+                        <button class="watchlist-control-btn" id="sort-by-name">
+                            <i class="fas fa-sort-alpha-down"></i> Sort by Name
+                        </button>
+                        <button class="watchlist-control-btn" id="sort-by-price">
+                            <i class="fas fa-sort-numeric-down"></i> Sort by Price
+                        </button>
+                    </div>
+                </div>
+                <div class="watchlist-content">
+                    <table class="watchlist-table">
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>LTP</th>
+                                <th>Change</th>
+                                <th>Change %</th>
+                                <th>Volume</th>
+                                <th>PE Ratio</th>
+                                <th>Market Cap (Cr)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="watchlist-items">
+                            <!-- Watchlist items will be added here -->
+                        </tbody>
+                    </table>
+                    <div class="empty-state" id="empty-watchlist">
+                        <i class="fas fa-binoculars"></i>
+                        <h3>Your watchlist is empty</h3>
+                        <p>Search for stocks above and add them to your watchlist</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Sectors Section -->
+            <div class="additional-section">
+                <div class="additional-header">
+                    <h2 class="additional-title">Sectors</h2>
+                </div>
+                <div class="sector-options" id="sector-options">
+                    <!-- Sector options will be added here -->
+                </div>
+                <div id="sector-list" style="display: none;">
+                    <table class="watchlist-table">
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>LTP</th>
+                                <th>Change</th>
+                                <th>Change %</th>
+                                <th>Volume</th>
+                                <th>PE Ratio</th>
+                                <th>Market Cap (Cr)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sector-items">
+                            <!-- Sector stocks will be added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+		
+		
+        <!-- Orders Section -->
+        <section id="orders-section" class="content-section">
+            <div class="orders-section">
+                <div class="orders-header">
+                    <h2 class="orders-title">Open Orders</h2>
+                </div>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Symbol</th>
+                            <th>Transaction</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Charges</th>
+                        </tr>
+                    </thead>
+                    <tbody id="open-orders-items">
+                        <!-- Open orders will be added dynamically -->
+                    </tbody>
+                </table>
+                <div class="empty-state" id="empty-open-orders">
+                    <i class="fas fa-file-invoice"></i>
+                    <h3>No open orders</h3>
+                    <p>Your open orders will appear here</p>
+                </div>
+                <h2 class="orders-title">Trade History</h2>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Symbol</th>
+                            <th>Transaction</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Charges</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trade-history-items">
+                        <!-- Trade history will be added dynamically -->
+                    </tbody>
+                </table>
+                <div class="empty-state" id="empty-trade-history">
+                    <i class="fas fa-history"></i>
+                    <h3>No trade history</h3>
+                    <p>Your executed trades will appear here</p>
+                </div>
+            </div>
+        </section>
+		
+		
+		
+		
+        <!-- Portfolio Section -->
+        <section id="portfolio-section" class="content-section">
+            <div class="portfolio-section">
+                <div class="portfolio-header">
+                    <h2 class="portfolio-title">Portfolio Overview</h2>
+                    <div class="portfolio-summary">
+                        <div class="summary-card">
+                            <h3>Total Investment</h3>
+                            <p id="total-investment">₹0.00</p>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Current Value</h3>
+                            <p id="current-value">₹0.00</p>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Profit & Loss</h3>
+                            <p id="profit-loss" class="positive">+₹0.00</p>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Day's Change</h3>
+                            <p id="days-change" class="positive">+₹0.00</p>
+                        </div>
+                    </div>
+                </div>
+                <table class="portfolio-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Quantity</th>
+                            <th>Avg. Price</th>
+                            <th>Invested</th>
+                            <th>LTP</th>
+                            <th>Current Value</th>
+                            <th>P&L</th>
+                            <th>P&L %</th>
+                        </tr>
+                    </thead>
+                    <tbody id="portfolio-items">
+                        <!-- Portfolio items will be added dynamically -->
+                    </tbody>
+                </table>
+                <div class="empty-state" id="empty-portfolio">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>Your portfolio is empty</h3>
+                    <p>Start investing to build your portfolio</p>
+                </div>
+            </div>
+        </section>
+		
+		
+		
+		
+		
+		
+		
+       
+        <!-- Account Section -->
+        <section id="account-section" class="content-section">
+            <div class="portfolio-section">
+                <div class="portfolio-header">
+                    <h2 class="portfolio-title">Account Overview</h2>
+                </div>
+                <div class="portfolio-summary">
+                    <div class="summary-card">
+                        <h3>Account Balance</h3>
+                        <p id="account-balance">₹0.00</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Invested Amount</h3>
+                        <p id="invested-amount">₹0.00</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Total Returns</h3>
+                        <p class="positive" id="total-returns">+₹0.00</p>
+                    </div>
+                </div>
+                <div class="account-details">
+                    <h3>Demat Account Information</h3>
+                    <p>User ID: TM123456</p>
+                    <p>Mobile No: +91 98765 43210</p>
+                    <p>PAN: ABCDE*****</p>
+                    <p>Bank: HDFC Bank - ****1234</p>
+                </div>
+                <div class="account-actions">
+                    <button class="btn btn-deposit" id="deposit-btn"><i class="fas fa-plus-circle"></i> Deposit Funds</button>
+                    <button class="btn btn-withdraw" id="withdraw-btn"><i class="fas fa-minus-circle"></i> Withdraw Funds</button>
+                    <a href="tradereport.html" class="btn btn-report"><i class="fas fa-file-alt"></i> Trade Report</a>
+                </div>
+       
+                <!-- Withdrawal Requests Section -->
+                <div class="withdrawal-requests" id="withdrawal-requests">
+                    <h3>Withdrawal Requests</h3>
+                    <div id="withdrawal-items">
+                        <!-- Withdrawal requests will be added here -->
+                    </div>
+                    <div class="empty-state" id="empty-withdrawals">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <h3>No withdrawal requests</h3>
+                        <p>Your withdrawal requests will appear here</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Explore Section for Derivatives -->
+        <section id="explore-section" class="content-section">
+            <div class="explore-section">
+                <h2 class="watchlist-title">Explore Derivatives</h2>
+                <div class="section">
+                    <h3>Indices</h3>
+                    <table class="watchlist-table">
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>LTP</th>
+                                <th>Change</th>
+                                <th>Change %</th>
+                            </tr>
+                        </thead>
+                        <tbody id="indices-items"></tbody>
+                    </table>
+                </div>
+                <div class="section">
+                    <h3>F&O Stocks</h3>
+                    <table class="watchlist-table">
+                        <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>LTP</th>
+                                <th>Change</th>
+                                <th>Change %</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fo-stocks-items"></tbody>
+                    </table>
+                </div>
+                <div class="additional-section">
+                    <div class="additional-header">
+                        <h2 class="additional-title">Derivative Categories</h2>
+                    </div>
+                    <div class="category-options" id="deriv-category-options">
+                        <!-- Deriv category options will be added here -->
+                    </div>
+                    <div id="deriv-list-container" style="display: none;">
+                        <table class="watchlist-table">
+                            <thead id="deriv-list-thead">
+                                <tr>
+                                    <th>Symbol</th>
+                                    <th>LTP</th>
+                                    <th>Change</th>
+                                    <th>Change %</th>
+                                    <th>Volume</th>
+                                </tr>
+                            </thead>
+                            <tbody id="deriv-list-items"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Derivative Orders Section -->
+        <section id="deriv-orders-section" class="content-section">
+            <div class="orders-section">
+                <div class="orders-header">
+                    <h2 class="orders-title">Open Orders</h2>
+                </div>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Symbol</th>
+                            <th>Transaction</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Charges</th>
+                        </tr>
+                    </thead>
+                    <tbody id="deriv-open-orders-items">
+                        <!-- Open orders will be added dynamically -->
+                    </tbody>
+                </table>
+                <div class="empty-state" id="empty-deriv-open-orders">
+                    <i class="fas fa-file-invoice"></i>
+                    <h3>No open orders</h3>
+                    <p>Your open orders will appear here</p>
+                </div>
+                <h2 class="orders-title">Trade History</h2>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Symbol</th>
+                            <th>Transaction</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Charges</th>
+                        </tr>
+                    </thead>
+                    <tbody id="deriv-trade-history-items">
+                        <!-- Trade history will be added dynamically -->
+                    </tbody>
+                </table>
+                <div class="empty-state" id="empty-deriv-trade-history">
+                    <i class="fas fa-history"></i>
+                    <h3>No trade history</h3>
+                    <p>Your executed trades will appear here</p>
+                </div>
+            </div>
+        </section>
+        <!-- Positions Section for Derivatives -->
+        <section id="positions-section" class="content-section">
+            <div class="portfolio-section">
+                <div class="portfolio-header">
+                    <h2 class="portfolio-title">Positions Overview</h2>
+                    <div class="portfolio-summary">
+                        <div class="summary-card">
+                            <h3>Total Investment</h3>
+                            <p id="deriv-total-investment">₹0.00</p>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Current Value</h3>
+                            <p id="deriv-current-value">₹0.00</p>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Profit & Loss</h3>
+                            <p id="deriv-profit-loss" class="positive">+₹0.00</p>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Day's Change</h3>
+                            <p id="deriv-days-change" class="positive">+₹0.00</p>
+                        </div>
+                    </div>
+                </div>
+                <table class="portfolio-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Quantity</th>
+                            <th>Avg. Price</th>
+                            <th>Invested</th>
+                            <th>LTP</th>
+                            <th>Current Value</th>
+                            <th>P&L</th>
+                            <th>P&L %</th>
+                        </tr>
+                    </thead>
+                    <tbody id="positions-items">
+                        <!-- Positions items will be added dynamically -->
+                    </tbody>
+                </table>
+                <div class="empty-state" id="empty-positions">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>Your positions are empty</h3>
+                    <p>Start trading derivatives to build your positions</p>
+                </div>
+            </div>
+        </section>
+        <!-- Mutual Funds Explore Section -->
+        <section id="mf-explore-section" class="content-section">
+            <div class="explore-section">
+                <h2 class="watchlist-title">Explore Mutual Funds</h2>
+                <a href="sip.html" class="sip-calculator-btn"><i class="fas fa-calculator"></i> Calculate SIP Returns</a>
+                <!-- Featured Mutual Funds -->
+                <div class="mf-category" id="featured-funds">
+                    <h3>Featured Mutual Funds</h3>
+                    <table class="mf-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>NAV</th>
+                                <th>Rating</th>
+                                <th>Fund Size (Cr)</th>
+                                <th>Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="featured-items"></tbody>
+                    </table>
+                </div>
+                <!-- Mutual Fund Categories -->
+                <div class="additional-section">
+                    <div class="additional-header">
+                        <h2 class="additional-title">Mutual Fund Categories</h2>
+                    </div>
+                    <div class="category-options" id="mf-category-options">
+                        <!-- MF category options will be added here -->
+                    </div>
+                </div>
+                <div class="mf-category" id="equity-funds" style="display: none;">
+                    <h3>Equity Funds</h3>
+                    <table class="mf-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>NAV</th>
+                                <th>Rating</th>
+                                <th>Fund Size (Cr)</th>
+                                <th>Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="equity-items"></tbody>
+                    </table>
+                </div>
+                <div class="mf-category" id="debt-funds" style="display: none;">
+                    <h3>Debt Funds</h3>
+                    <table class="mf-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>NAV</th>
+                                <th>Rating</th>
+                                <th>Fund Size (Cr)</th>
+                                <th>Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="debt-items"></tbody>
+                    </table>
+                </div>
+                <div class="mf-category" id="hybrid-funds" style="display: none;">
+                    <h3>Hybrid Funds</h3>
+                    <table class="mf-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>NAV</th>
+                                <th>Rating</th>
+                                <th>Fund Size (Cr)</th>
+                                <th>Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hybrid-items"></tbody>
+                    </table>
+                </div>
+                <div class="mf-category" id="large-cap-funds" style="display: none;">
+                    <h3>Large Cap Funds</h3>
+                    <table class="mf-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>NAV</th>
+                                <th>Rating</th>
+                                <th>Fund Size (Cr)</th>
+                                <th>Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="largecap-items"></tbody>
+                    </table>
+                </div>
+                <div class="mf-category" id="mid-cap-funds" style="display: none;">
+                    <h3>Mid Cap Funds</h3>
+                    <table class="mf-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>NAV</th>
+                                <th>Rating</th>
+                                <th>Fund Size (Cr)</th>
+                                <th>Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="midcap-items"></tbody>
+                    </table>
+                </div>
+                <div class="mf-category" id="small-cap-funds" style="display: none;">
+                    <h3>Small Cap Funds</h3>
+                    <table class="mf-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>NAV</th>
+                                <th>Rating</th>
+                                <th>Fund Size (Cr)</th>
+                                <th>Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="smallcap-items"></tbody>
+                    </table>
+                </div>
+                <div class="mf-category" id="high-return-funds" style="display: none;">
+                    <h3>High Return Funds</h3>
+                    <table class="mf-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>NAV</th>
+                                <th>Rating</th>
+                                <th>Fund Size (Cr)</th>
+                                <th>Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="highreturn-items"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <!-- Mutual Funds Orders Section -->
+        <section id="mf-orders-section" class="content-section">
+            <div class="orders-section">
+                <h2 class="orders-title">Mutual Fund Orders</h2>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Fund Name</th>
+                            <th>Type</th>
+                            <th>Amount/Units</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mf-orders-items">
+                        <!-- MF orders will be added dynamically -->
+                    </tbody>
+                </table>
+                <div class="empty-state" id="empty-mf-orders">
+                    <i class="fas fa-file-invoice"></i>
+                    <h3>No orders</h3>
+                    <p>Your mutual fund orders will appear here</p>
+                </div>
+            </div>
+        </section>
+        <!-- Mutual Funds Dashboard Section -->
+        <section id="mf-dashboard-section" class="content-section">
+            <div class="mf-dashboard-section">
+                <h2 class="portfolio-title">Mutual Funds Dashboard</h2>
+                <div class="mf-investments" id="one-time-investments">
+                    <h3>One-Time Investments</h3>
+                    <table class="mf-investment-table">
+                        <thead>
+                            <tr>
+                                <th>Fund Name</th>
+                                <th>Invested Amount</th>
+                                <th>Units</th>
+                                <th>Current NAV</th>
+                                <th>Current Value</th>
+                                <th>P&L</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="one-time-items"></tbody>
+                    </table>
+                    <div class="empty-state" id="empty-one-time">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>No one-time investments</h3>
+                        <p>Your one-time investments will appear here</p>
+                    </div>
+                </div>
+                <div class="mf-investments" id="sip-investments">
+                    <h3>SIP Investments</h3>
+                    <table class="mf-investment-table">
+                        <thead>
+                            <tr>
+                                <th>Fund Name</th>
+                                <th>SIP Amount</th>
+                                <th>Total Invested</th>
+                                <th>Units</th>
+                                <th>Current NAV</th>
+                                <th>Current Value</th>
+                                <th>P&L</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sip-items"></tbody>
+                    </table>
+                    <div class="empty-state" id="empty-sip">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>No SIP investments</h3>
+                        <p>Your SIP investments will appear here</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Order Modal (kept for portfolio sells, etc.) -->
+    <div class="order-modal" id="order-modal">
+        <div class="order-content">
+            <i class="fas fa-times order-close" id="order-close"></i>
+            <div class="order-header">
+                <div class="order-stock-info">
+                    <span class="order-stock-symbol" id="order-symbol"></span>
+                    <span class="order-stock-name" id="order-name"></span>
+                </div>
+                <span class="order-stock-price" id="order-price"></span>
+            </div>
+            <form class="order-form">
+                <div class="order-form-group" id="instrument-group">
+                    <label for="instrument-type">Instrument</label>
+                    <select id="instrument-type">
+                        <option value="Stock">Stock</option>
+                        <option value="Future">Future</option>
+                        <option value="Call">Call Option</option>
+                        <option value="Put">Put Option</option>
+                    </select>
+                </div>
+                <div class="order-form-group" id="strike-group">
+                    <label for="strike-price">Strike Price</label>
+                    <input type="number" id="strike-price" placeholder="Enter strike">
+                </div>
+                <div class="order-form-group">
+                    <label for="order-type">Transaction Type</label>
+                    <select id="order-type">
+                        <option value="Buy">Buy</option>
+                        <option value="Sell">Sell</option>
+                    </select>
+                </div>
+                <div class="order-form-group">
+                    <label for="product-type">Product</label>
+                    <select id="product-type">
+                        <option value="Intraday">Intraday</option>
+                        <option value="Delivery">Delivery</option>
+                    </select>
+                </div>
+                <div class="order-form-group">
+                    <label for="order-variety">Order Type</label>
+                    <select id="order-variety">
+                        <option value="Market">Market</option>
+                        <option value="Limit">Limit</option>
+                    </select>
+                </div>
+                <div class="order-form-group order-limit-price" id="limit-price-group">
+                    <label for="limit-price">Limit Price</label>
+                    <input type="number" id="limit-price" placeholder="Enter price" step="0.01">
+                </div>
+                <div class="order-form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" min="1" value="1">
+                </div>
+                <div class="order-actions">
+                    <button type="button" class="btn-place-order" id="place-order-btn">Place Order</button>
+                    <button type="button" class="btn-cancel-order" id="cancel-order-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- New Stock Detail Modal -->
+    <div class="stock-detail-modal" id="stock-detail-modal">
+        <div class="stock-detail-content">
+            <i class="fas fa-times stock-detail-close" id="stock-detail-close"></i>
+            <div class="stock-header">
+                <div class="stock-info">
+                    <span id="detail-symbol"></span>
+                    <span id="detail-name"></span>
+                </div>
+                <span id="detail-price"></span>
+            </div>
+            <!-- Performance Section for Stocks -->
+            <div class="performance-section">
+                <div class="performance-header">
+                    <h2 class="performance-title">Performance</h2>
+                    <div class="performance-periods">
+                        <button class="period-btn active" data-period="1d">1D</button>
+                        <button class="period-btn" data-period="1w">1W</button>
+                        <button class="period-btn" data-period="1m">1M</button>
+                        <button class="period-btn" data-period="3m">3M</button>
+                        <button class="period-btn" data-period="6m">6M</button>
+                        <button class="period-btn" data-period="1y">1Y</button>
+                        <button class="period-btn" data-period="3y">3Y</button>
+                        <button class="period-btn" data-period="5y">5Y</button>
+                    </div>
+                </div>
+                <div class="performance-content">
+                    <div class="performance-stats" id="stock-performance-stats">
+                        <!-- Performance stats will be added dynamically -->
+                    </div>
+                    <div class="performance-chart">
+                        <canvas id="stock-performance-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="stock-metrics" id="stock-metrics">
+                <!-- Metrics cards will be added dynamically -->
+            </div>
+            <div class="financials">
+                <h3>Revenue Last 5 Years (Cr)</h3>
+                <canvas id="revenue-chart"></canvas>
+                <h3>Profit Last 5 Years (Cr)</h3>
+                <canvas id="profit-chart"></canvas>
+            </div>
+            <div class="shareholding">
+                <h3>Share Holding Pattern (%)</h3>
+                <canvas id="shareholding-chart"></canvas>
+            </div>
+            <div class="companies" id="companies">
+                <h3>Constituent Companies</h3>
+                <table id="companies-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Name</th>
+                            <th>Market Cap (Cr)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="companies-items"></tbody>
+                </table>
+            </div>
+            <div id="deriv-actions" style="display:none;">
+                <button class="btn" id="future-btn"><i class="fas fa-forward"></i> Future</button>
+                <button class="btn" id="option-chain-btn"><i class="fas fa-link"></i> Option Chain</button>
+            </div>
+            <a href="#" id="tradingview-link" target="_blank"><i class="fas fa-chart-line"></i> View Real Chart on TradingView</a>
+            <hr style="margin: 1.5rem 0;">
+            <form class="order-form" id="detail-order-form">
+                <div class="order-form-group" id="detail-instrument-group">
+                    <label for="detail-instrument-type">Instrument</label>
+                    <select id="detail-instrument-type">
+                        <option value="Stock">Stock</option>
+                        <option value="Future">Future</option>
+                        <option value="Call">Call Option</option>
+                        <option value="Put">Put Option</option>
+                    </select>
+                </div>
+                <div class="order-form-group" id="detail-strike-group">
+                    <label for="detail-strike-price">Strike Price</label>
+                    <input type="number" id="detail-strike-price" placeholder="Enter strike">
+                </div>
+                <div class="order-form-group">
+                    <label for="detail-order-type">Transaction Type</label>
+                    <select id="detail-order-type">
+                        <option value="Buy">Buy</option>
+                        <option value="Sell">Sell</option>
+                    </select>
+                </div>
+                <div class="order-form-group">
+                    <label for="detail-product-type">Product</label>
+                    <select id="detail-product-type">
+                        <option value="Intraday">Intraday</option>
+                        <option value="Delivery">Delivery</option>
+                    </select>
+                </div>
+                <div class="order-form-group">
+                    <label for="detail-order-variety">Order Type</label>
+                    <select id="detail-order-variety">
+                        <option value="Market">Market</option>
+                        <option value="Limit">Limit</option>
+                    </select>
+                </div>
+                <div class="order-form-group order-limit-price" id="detail-limit-price-group">
+                    <label for="detail-limit-price">Limit Price</label>
+                    <input type="number" id="detail-limit-price" placeholder="Enter price" step="0.01">
+                </div>
+                <div class="order-form-group">
+                    <label for="detail-quantity">Quantity</label>
+                    <input type="number" id="detail-quantity" min="1" value="1">
+                </div>
+                <div class="order-actions">
+                    <button type="button" class="btn-place-order" id="detail-place-order-btn">Place Order</button>
+                    <button type="button" class="btn-cancel-order" id="detail-cancel-order-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- New Index Detail Modal -->
+    <div class="index-detail-modal" id="index-detail-modal">
+        <div class="index-detail-content">
+            <i class="fas fa-times index-detail-close" id="index-detail-close"></i>
+            <div class="index-header">
+                <div class="index-info">
+                    <span id="index-detail-symbol"></span>
+                    <span id="index-detail-name"></span>
+                </div>
+                <span id="index-detail-price"></span>
+            </div>
+          
+            <!-- Performance Section for Index -->
+            <div class="performance-section">
+                <div class="performance-header">
+                    <h2 class="performance-title">Performance</h2>
+                    <div class="performance-periods">
+                        <button class="period-btn active" data-period="1d">1D</button>
+                        <button class="period-btn" data-period="1w">1W</button>
+                        <button class="period-btn" data-period="1m">1M</button>
+                        <button class="period-btn" data-period="3m">3M</button>
+                        <button class="period-btn" data-period="6m">6M</button>
+                        <button class="period-btn" data-period="1y">1Y</button>
+                        <button class="period-btn" data-period="3y">3Y</button>
+                        <button class="period-btn" data-period="5y">5Y</button>
+                    </div>
+                </div>
+                <div class="performance-content">
+                    <div class="performance-stats" id="index-performance-stats">
+                        <!-- Performance stats will be added dynamically -->
+                    </div>
+                    <div class="performance-chart">
+                        <canvas id="index-performance-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+          
+            <!-- Index Companies Section -->
+            <div class="index-companies">
+                <h3>Constituent Companies</h3>
+                <table class="watchlist-table">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Name</th>
+                            <th>Weight (%)</th>
+                            <th>LTP</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody id="index-companies-items">
+                        <!-- Companies will be added dynamically -->
+                    </tbody>
+                </table>
+            </div>
+          
+            <!-- Index News Section -->
+            <div class="index-news">
+                <h3>Market News & Analysis</h3>
+                <div id="index-news-items">
+                    <!-- News items will be added dynamically -->
+                </div>
+            </div>
+          
+            <!-- Index Trends Section -->
+            <div class="index-trends">
+                <h3>Market Trends</h3>
+                <div id="index-trends-items">
+                    <!-- Trend items will be added dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Option Chain Modal -->
+    <div class="option-chain-modal" id="option-chain-modal">
+        <div class="chain-content">
+            <i class="fas fa-times" id="chain-close"></i>
+            <h2>Option Chain for <span id="chain-symbol"></span></h2>
+            <table class="chain-table">
+                <thead>
+                    <tr>
+                        <th>Call OI</th>
+                        <th>Call Price</th>
+                        <th>Strike</th>
+                        <th>Put Price</th>
+                        <th>Put OI</th>
+                        <th>Call Vol</th>
+                        <th>Put Vol</th>
+                        <th>Call OI Change</th>
+                        <th>Put OI Change</th>
+                    </tr>
+                </thead>
+                <tbody id="chain-items">
+                    <!-- Chain items added dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Mutual Fund Detail Modal -->
+    <div class="mf-detail-modal" id="mf-detail-modal">
+        <div class="mf-detail-content">
+            <i class="fas fa-times mf-detail-close" id="mf-detail-close"></i>
+            <div class="mf-header">
+                <span id="mf-detail-name"></span>
+                <span id="mf-detail-type"></span>
+                <span id="mf-detail-nav"></span>
+            </div>
+          
+            <!-- Performance Section for Mutual Funds -->
+            <div class="performance-section">
+                <div class="performance-header">
+                    <h2 class="performance-title">Performance</h2>
+                    <div class="performance-periods">
+                        <button class="period-btn active" data-period="1d">1D</button>
+                        <button class="period-btn" data-period="1w">1W</button>
+                        <button class="period-btn" data-period="1m">1M</button>
+                        <button class="period-btn" data-period="3m">3M</button>
+                        <button class="period-btn" data-period="6m">6M</button>
+                        <button class="period-btn" data-period="1y">1Y</button>
+                        <button class="period-btn" data-period="3y">3Y</button>
+                        <button class="period-btn" data-period="5y">5Y</button>
+                    </div>
+                </div>
+                <div class="performance-content">
+                    <div class="performance-stats" id="mf-performance-stats">
+                        <!-- Performance stats will be added dynamically -->
+                    </div>
+                    <div class="performance-chart">
+                        <canvas id="mf-performance-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="mf-metrics" id="mf-metrics">
+                <!-- MF metrics cards added dynamically -->
+            </div>
+            <div class="mf-risk-sip">
+                <span id="mf-detail-risk"></span>
+                <a href="sip.html" class="mf-sip-link"><i class="fas fa-calculator"></i> Calculate SIP Returns</a>
+            </div>
+            <div class="mf-holdings">
+                <h3>Top Holdings</h3>
+                <ul id="mf-holdings-list"></ul>
+            </div>
+            <div class="mf-returns">
+                <h3>Returns Last 5 Years (%)</h3>
+                <canvas id="mf-returns-chart"></canvas>
+            </div>
+            <form class="mf-order-form">
+                <div class="mf-order-type">
+                    <button type="button" class="mf-invest-type active" data-type="one-time">One-Time</button>
+                    <button type="button" class="mf-invest-type" data-type="sip">SIP</button>
+                </div>
+                <div class="order-form-group">
+                    <label for="mf-amount">Amount (₹)</label>
+                    <input type="number" id="mf-amount" min="500" placeholder="Enter amount">
+                </div>
+                <div class="order-form-group mf-sip-frequency" id="mf-sip-frequency-group">
+                    <label for="mf-frequency">Frequency</label>
+                    <select id="mf-frequency">
+                        <option value="monthly">Monthly</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="daily">Daily</option>
+                    </select>
+                </div>
+                <div class="order-actions">
+                    <button type="button" class="btn-place-order" id="mf-place-order-btn">Invest Now</button>
+                    <button type="button" class="btn-cancel-order" id="mf-cancel-order-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Redeem Modal -->
+    <div class="redeem-modal" id="redeem-modal">
+        <div class="redeem-content">
+            <i class="fas fa-times redeem-close" id="redeem-close"></i>
+            <h2 class="redeem-header">Redeem Amount</h2>
+            <div class="funds-form-group">
+                <label for="redeem-amount">Amount to Redeem (₹)</label>
+                <input type="number" id="redeem-amount" min="100" placeholder="Enter amount to redeem" step="0.01">
+            </div>
+            <button type="button" class="btn-confirm-redeem" id="confirm-redeem">Confirm Redemption</button>
+        </div>
+    </div>
+    <!-- Deposit Modal -->
+    <div class="funds-modal" id="deposit-modal">
+        <div class="funds-content">
+            <i class="fas fa-times funds-close" id="deposit-close"></i>
+            <h2 class="funds-header">Deposit Funds</h2>
+            <form class="funds-form" id="deposit-form">
+                <div class="funds-form-group">
+                    <label for="deposit-amount">Amount (₹)</label>
+                    <input type="number" id="deposit-amount" min="100" placeholder="Enter amount" step="0.01">
+                </div>
+                <div class="funds-form-group">
+                    <label for="deposit-method">Payment Method</label>
+                    <select id="deposit-method">
+                        <option value="QR">QR Code</option>
+                        <option value="UPI">UPI</option>
+                    </select>
+                </div>
+                <div class="method-section" id="deposit-qr-section">
+                    <div class="qr-code">[Simulated QR Code - Scan to Pay]</div>
+                </div>
+                <div class="method-section" id="deposit-upi-section">
+                    <input type="text" id="deposit-upi-id" placeholder="Enter UPI ID (optional)">
+                </div>
+                <button type="button" class="btn-confirm" id="confirm-deposit">Confirm Deposit</button>
+            </form>
+        </div>
+    </div>
+    <!-- Withdraw Modal -->
+    <div class="funds-modal" id="withdraw-modal">
+        <div class="funds-content">
+            <i class="fas fa-times funds-close" id="withdraw-close"></i>
+            <h2 class="funds-header">Withdraw Funds</h2>
+            <form class="funds-form" id="withdraw-form">
+                <div class="funds-form-group">
+                    <label for="withdraw-amount">Amount (₹)</label>
+                    <input type="number" id="withdraw-amount" min="100" placeholder="Enter amount" step="0.01">
+                </div>
+                <div class="funds-form-group">
+                    <label for="withdraw-method">Withdrawal Method</label>
+                    <select id="withdraw-method">
+                        <option value="UPI">UPI</option>
+                        <option value="Bank">Bank Transfer</option>
+                    </select>
+                </div>
+                <div class="method-section" id="withdraw-upi-section">
+                    <input type="text" id="withdraw-upi-id" placeholder="Enter UPI ID">
+                </div>
+                <div class="method-section" id="withdraw-bank-section">
+                    <input type="text" id="withdraw-bank-account" placeholder="Bank Account Number" value="****1234" disabled>
+                    <input type="text" id="withdraw-ifsc" placeholder="IFSC Code" value="HDFC0001234" disabled>
+                </div>
+                <button type="button" class="btn-confirm" id="confirm-withdraw">Confirm Withdrawal</button>
+            </form>
+        </div>
+    </div>
+    <!-- Withdrawal Animation -->
+    <div class="withdrawal-animation" id="withdrawal-animation">
+        <i class="fas fa-spinner"></i>
+        <h3 id="withdrawal-message">Processing Withdrawal</h3>
+        <p id="withdrawal-details"></p>
+        <div class="progress-container">
+            <div class="progress-bar" id="withdrawal-progress"></div>
+        </div>
+    </div>
+    <!-- Order Animation -->
+    <div class="order-animation" id="order-animation">
+        <i class="fas fa-check-circle"></i>
+        <h3 id="order-animation-message">Order Placed</h3>
+        <p id="order-animation-details"></p>
+        <div class="progress-container">
+            <div class="progress-bar" id="order-progress"></div>
+        </div>
+    </div>
+    <!-- Fund Animation -->
+    <div class="fund-animation" id="fund-animation">
+        <i class="fas fa-check-circle"></i>
+        <h3 id="fund-animation-message">Funds Added</h3>
+        <p id="fund-animation-details"></p>
+        <div class="progress-container">
+            <div class="progress-bar" id="fund-progress"></div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col" style="grid-column: 1 / -1; text-align: center;">
+                <div class="footer-logo" style="justify-content: center;">
+                    <i class="fas fa-chart-line"></i>
+                    <span>TradeMax India</span>
+                </div>
+                <p class="footer-about">
+                    India's premier stock trading platform with advanced tools, real-time NSE/BSE data, and expert analysis for investors of all levels.
+                </p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 TradeMax Financial India. All rights reserved. | Registered with SEBI as a stock broker.
+            </div>
+        </div>
+    </footer>
+
+<!-- script.js here  -->
+
+
+	</html>
